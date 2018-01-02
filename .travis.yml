@@ -75,6 +75,19 @@ before_script:
           TR_RELEASE_REAL_BRANCH="$TRAVIS_BRANCH"; 
       fi
     - TR_UPDATER_BRANCH=$(tr_eval_on_project_config updater_format_branch "$TR_RELEASE_REAL_BRANCH"); TR_UPDATER_VALID_BRANCH=$?
+    
+    - |
+      if [[ "$TR_COMP_VERSION" == "$TR_COMP_STABLE_VERSION" && "$TR_UPDATER_VALID_BRANCH" -eq 0 ]]; then 
+          TR_UPDATER_DO_DEPLOY=0;
+      else
+          TR_UPDATER_DO_DEPLOY=1;
+      fi
+    
+    - echo "$TR_COMP_VERSION"
+    - echo "$TR_COMP_STABLE_VERSION"
+    - echo "$TR_UPDATER_VALID_BRANCH"
+    - echo "$TR_RELEASE_REAL_BRANCH"
+    - echo "$TR_UPDATER_BRANCH"
 
 # And build!
 script: 
@@ -82,12 +95,6 @@ script:
       "$TR_PROJECT_BUILDTOOLS_PATH/spbbuilder/spbbuilder.sh" -c "$TR_SM_COMPILER_DIR" -r "$TR_PROJECT_ROOT" -s -o "$TR_RELEASE_CACHE_BUILDER")
 
 before_deploy:
-    - |
-      if [[ "$TR_COMP_VERSION" == "$TR_COMP_STABLE_VERSION" && "$TR_UPDATER_VALID_BRANCH" -eq 0 ]]; then 
-          TR_UPDATER_DO_DEPLOY=0;
-      else
-          TR_UPDATER_DO_DEPLOY=1;
-      fi
     - TR_UPDATER_SCRIPTS_PATH="$TR_PROJECT_BUILDTOOLS_PATH/tony_updater"
     - chmod +x "$TR_UPDATER_SCRIPTS_PATH/deploy.sh"
 
@@ -98,12 +105,6 @@ before_deploy:
     - TR_PACKAGE_ROOT_PATH="$(tr_eval_on_project_config echo '$PACKAGE_ROOT_PATH')"
     - TR_UPDATER_SCRIPT_WD="$TR_PROJECT_ROOT"
     - ln -s "$TR_PACKAGE_ROOT_PATH" "$TR_UPDATER_SCRIPT_WD/.package_updater"
-    
-    - echo "$TR_COMP_VERSION"
-    - echo "$TR_COMP_STABLE_VERSION"
-    - echo "$TR_UPDATER_VALID_BRANCH"
-    - echo "$TR_RELEASE_REAL_BRANCH"
-    - echo "$TR_UPDATER_BRANCH"
 
 deploy:
     - provider: releases
