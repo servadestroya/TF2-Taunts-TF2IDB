@@ -11,6 +11,10 @@ addons:
             # We need at least python3.4 to run our custom deployment scripts
             - python3.5
 
+# Clone complete repo
+git:
+    depth: false
+
 # Set the build environment
 env:
     global:
