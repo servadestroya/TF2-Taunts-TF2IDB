@@ -74,7 +74,7 @@ before_script:
       else 
           TR_RELEASE_REAL_BRANCH="$TRAVIS_BRANCH"; 
       fi
-    - TR_UPDATER_BRANCH=$(tr_eval_on_project_config updater_format_branch); TR_UPDATER_VALID_BRANCH=$?
+    - TR_UPDATER_BRANCH=$(tr_eval_on_project_config updater_format_branch "$TR_RELEASE_REAL_BRANCH"); TR_UPDATER_VALID_BRANCH=$?
 
 # And build!
 script: 
