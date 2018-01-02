@@ -74,7 +74,7 @@ before_script:
       else 
           TR_RELEASE_REAL_BRANCH="$TRAVIS_BRANCH"; 
       fi
-    - TR_UPDATER_BRANCH=$(tr_eval_on_project_config updater_format_branch); TR_UPDATER_DO_DEPLOY=$?
+    - TR_UPDATER_BRANCH=$(tr_eval_on_project_config updater_format_branch); TR_UPDATER_VALID_BRANCH=$?
 
 # And build!
 script: 
@@ -82,6 +82,12 @@ script:
       "$TR_PROJECT_BUILDTOOLS_PATH/spbbuilder/spbbuilder.sh" -c "$TR_SM_COMPILER_DIR" -r "$TR_PROJECT_ROOT" -s -o "$TR_RELEASE_CACHE_BUILDER")
 
 before_deploy:
+    - |
+      if [[ "$TR_COMP_VERSION" == "$TR_COMP_STABLE_VERSION" && "$TR_UPDATER_VALID_BRANCH" -eq 0 ]]; then 
+          TR_UPDATER_DO_DEPLOY=0;
+      else
+          TR_UPDATER_DO_DEPLOY=1;
+      fi
     - TR_UPDATER_SCRIPTS_PATH="$TR_PROJECT_BUILDTOOLS_PATH/tony_updater"
     - chmod +x "$TR_UPDATER_SCRIPTS_PATH/deploy.sh"
 
@@ -123,9 +129,9 @@ deploy:
           repo: servadestroya/TF2-Taunts-TF2IDB
           # Allowed branches and their mappings can be found at ``updater_format_branch`` on "spbb_config.sh"
           #branch: updater
-          # If this branch is allowed to trigger sourcemod updater releases, ``TR_UPDATER_DO_DEPLOY``
-          # will need to be set to true. 
-          condition: '"$TR_COMP_VERSION" == "$TR_COMP_STABLE_VERSION" && $TR_UPDATER_DO_DEPLOY == 0'
+          # If this branch is allowed to trigger sourcemod updater releases and the compiler version is stable, 
+          # ``TR_UPDATER_DO_DEPLOY`` will need to be set to true. 
+          condition: '"$TR_UPDATER_DO_DEPLOY" == 0'
           tags: false
 
 # Notifications
