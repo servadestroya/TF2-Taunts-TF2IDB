@@ -61,9 +61,9 @@ before_script:
     - TR_PROJECT_BUILD_OPTION="$(tr_eval_on_project_config 
         source "$TR_PROJECT_BUILDTOOLS_PATH/spbbuilder/tools/misc.sh" '&&' 
         find_string_at_index "$TR_RELEASE_CACHE_BUILDER" '${PROJECT_BUILD_OPTIONS[@]}')"
-    - TR_RELEASE_TAG="$(source "$TR_PROJECT_BUILDTOOLS_PATH/spbbuilder/tools/misc.sh" && 
+    - TR_RELEASE_TAG="$(source "$TR_PROJECT_BUILDTOOLS_PATH/spbbuilder/tools/git.sh" && 
         git_get_latest_tag "$TR_PROJECT_ROOT")"
-    - TR_RELEASE_COMMIT="$(source "$TR_PROJECT_BUILDTOOLS_PATH/spbbuilder/tools/misc.sh" && 
+    - TR_RELEASE_COMMIT="$(source "$TR_PROJECT_BUILDTOOLS_PATH/spbbuilder/tools/git.sh" && 
         git_get_commit_number "$TR_PROJECT_ROOT")"
     # If the latest tag and the travis branch are the same, the build was triggered by tags, 
     # these correspond to master, which is the only branch that can trigger tagged releases ATM.
