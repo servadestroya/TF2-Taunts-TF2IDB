@@ -81,7 +81,7 @@ before_script:
     - TR_UPDATER_BRANCH=$(tr_eval_on_project_config updater_format_branch "$TR_RELEASE_REAL_BRANCH"); TR_UPDATER_VALID_BRANCH=$?
     
     - |
-      if [[ "$TR_COMP_VERSION" == "$TR_COMP_STABLE_VERSION" && "$TR_UPDATER_VALID_BRANCH" -eq 0 ]]; then 
+      if [[ "$TR_COMP_VERSION" == "$TR_COMP_STABLE_VERSION" && "$TR_UPDATER_VALID_BRANCH" -eq 0 && "$TR_RELEASE_REAL_BRANCH" != 'master' ]]; then 
           TR_UPDATER_DO_DEPLOY=0;
       else
           TR_UPDATER_DO_DEPLOY=1;
