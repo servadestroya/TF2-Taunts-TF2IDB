@@ -98,6 +98,12 @@ before_deploy:
     - TR_PACKAGE_ROOT_PATH="$(tr_eval_on_project_config echo '$PACKAGE_ROOT_PATH')"
     - TR_UPDATER_SCRIPT_WD="$TR_PROJECT_ROOT"
     - ln -s "$TR_PACKAGE_ROOT_PATH" "$TR_UPDATER_SCRIPT_WD/.package_updater"
+    
+    - echo "$TR_COMP_VERSION"
+    - echo "$TR_COMP_STABLE_VERSION"
+    - echo "$TR_UPDATER_VALID_BRANCH"
+    - echo "$TR_RELEASE_REAL_BRANCH"
+    - echo "$TR_UPDATER_BRANCH"
 
 deploy:
     - provider: releases
@@ -113,6 +119,7 @@ deploy:
           tags: true
         
     - provider: script
+      all_branches: true
       script: 
               'cd "$TR_UPDATER_SCRIPT_WD" && 
               "$TR_UPDATER_SCRIPTS_PATH/deploy.sh" 
