@@ -112,9 +112,8 @@ before_deploy:
     - ln -s "$TR_PACKAGE_ROOT_PATH" "$TR_UPDATER_SCRIPT_WD/.package_updater"
     
     - tree
-    - tree -a
-    - tree -a -I .git "$TR_PROJECT_ROOT"
     - tree -a -I .git "$TR_PACKAGE_DIR"
+    - tree -a -I .git "$TR_PROJECT_ROOT"
 
 deploy:
     - provider: releases
