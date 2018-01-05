@@ -118,7 +118,7 @@ deploy:
       skip_cleanup: true
       
       draft: true
-      body: $TRAVIS_TAG
+      name: $TRAVIS_TAG
       target_commitish: $TRAVIS_COMMIT
       tag_name: $TRAVIS_TAG
       
