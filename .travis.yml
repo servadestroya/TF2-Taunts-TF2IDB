@@ -116,6 +116,13 @@ deploy:
           secure: boF7S9TR3/YS31Gb8Omg7nMi9b20NPD+2d7GvU+Jf0tYAwTs6SubO6iHlJEH6pNi2dXf6tvraKTysxPd1lwbvjehndGgDnmyBCyVmTpBZyeUxK18blQk7UbFHQTqHnoPZw1bVGygGSEDxFZz3PynJ7K4FD9NtV3S8Pq7ltYE+iDoHaeim1s/OYqTyJvH8uDHxWubV+VfDlDFc4tJ7SIKBUIMLf89puaarhjh0ihXhpJijRV/Tet4Ar6B+yBGAXuzcIys260j3w6jwf52i5bQSZN/mEh5G1J6YMaZgZ7Qxiv7Ni8xNc8cf2dpTkmCZD8QIVXEExl+Cv+VDaLcofIGYALUgS4wLaOidaFvdruyJHih9g6S9OhmuLSg9xwTy7PKVb7IX01PCq0dk6ZH2soL+I1BTlpDi/fUIUFcgdO3xv22ml5bUOP3Hr4YgyDImnBhz5lA9YN94TcE6h0ZHk/PHVRSq9agFAefHgU92uXcP32sPaXuPGoHkmFZgf1mS6MUZwoJtxtdnHAlYrvRpZsY25lXMjydCLG2a38q37KYDgXemYvx9ZwLTUm3LpGctT/tGDnlcvr0h4JzKRSTUKFTGzNjzQthZVJnHamebBpC20ITf+e5/h+6/t8jC798c3PTkDkehB0k+dInLfeZJiidIvi0dBHwyKeAAzFzGMWjVxo=
       file: $TR_RELEASE_FILE
       skip_cleanup: true
+      
+      draft: true
+      name: $TRAVIS_TAG
+      body: $TRAVIS_TAG
+      target_commitish: $TRAVIS_COMMIT
+      tag_name: $TRAVIS_TAG
+      
       on:
           # Only deploy for the stable branch
           condition: '"$TR_COMP_VERSION" == "$TR_COMP_STABLE_VERSION"'
