@@ -13,5 +13,8 @@
 /scripting/include/tf2itemsinfo.inc
 /scripting/include/updater.inc
 
-## Ignore autoversioning includes
-autoversioning.inc
+## Ignore temporal includes
+/scripting/include/.tmp/
+
+## Ignore package directory
+/.package/
