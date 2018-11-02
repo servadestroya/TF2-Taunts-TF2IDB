@@ -15,9 +15,12 @@ def main() -> int:
     parser.add_argument("--smlib", help="Path to the SourceMod scripting directory", type=Path, required=True)
     parser.add_argument("--item_schema_api", help="Item schema API to build the plugin for", type=str,
                         choices=TauntsPluginProject.project_flavours.keys(), required=True)
+    parser.add_argument("--branch", help="Name of the branch this release is targeting"
+                                         "(useful when working with a detached HEAD)", type=str)
     args = parser.parse_args()
     smlib: Path = args.smlib / "include"
     flavour: str = args.item_schema_api
+    branch: Optional[str] = getattr(args, "branch", None)
 
     compiler = spcomp.get_compiler_from_include(smlib)
     if compiler is None:
@@ -27,7 +30,8 @@ def main() -> int:
           project_root=Path(__file__).parent,
           package_dir=Path.cwd() / f"build-{flavour}",
           compiler=compiler,
-          smlib=smlib)
+          smlib=smlib,
+          branch=branch)
 
     return 0
 
@@ -36,7 +40,8 @@ def build(item_schema_api: str,
           project_root: Path,
           package_dir: Path,
           compiler: Path,
-          smlib: Path) -> None:
+          smlib: Path,
+          branch: Optional[str] = None) -> None:
     if item_schema_api not in TauntsPluginProject.project_flavours.keys():
         raise ValueError(f"{item_schema_api} is not a valid build flavour")
 
@@ -46,6 +51,10 @@ def build(item_schema_api: str,
     project_as_dev = TauntsPluginProject(project_root,
                                          build_type=TauntsPluginProject.DevBuild)
     version_info = versioning.get_version_from_git(project.root)
+    if branch is not None and len(branch) > 0:
+        version_info = versioning.VersionInfo(version_info.tag,
+                                              version_info.commit_number,
+                                              branch)
 
     project_on_package = TauntsPluginProject(package_root,
                                              build_type=TauntsPluginProject.PackageBuild)
