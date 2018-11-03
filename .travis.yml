@@ -82,6 +82,8 @@ before_deploy:
           TR_UPDATER_REPO="${TR_GH_DEPLOY_ARGS[2]}"
           TR_UPDATER_USER="${TR_GH_DEPLOY_ARGS[3]}"
           TR_UPDATER_BRANCH="${TR_GH_DEPLOY_ARGS[4]}"
+          TR_RELEASE_AUTHOR_NAME="$(git --no-pager show -s --format='%an' "$TRAVIS_COMMIT")"
+          TR_RELEASE_AUTHOR_MAIL="$(git --no-pager show -s --format='%ae' "$TRAVIS_COMMIT")"
       else
           TR_GH_DEPLOY=1
       fi
@@ -108,8 +110,8 @@ deploy:
                   "$TR_UPDATER_REPO"
                   "$TR_UPDATER_USER"
                   "$UPDATER_REPO_OAUTH"
-                  "fakuivan"
-                  "fakuivan@gmail.com"
+                  "$TR_RELEASE_AUTHOR_NAME"
+                  "$TR_RELEASE_AUTHOR_MAIL"
                   "$TR_UPDATER_BRANCH"'
       skip_cleanup: true
       on:
