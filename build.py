@@ -257,6 +257,8 @@ class ProjectUpdater(GitHubUpdaterData):
 
 def ignore_on_parent_path(parent: Path) -> Callable[[str, List[str]], Iterable[str]]:
     def which_paths_are_on_parent(path: str, names: List[str]):
+        if not parent.exists():
+            return set()
         ignored: List[str] = list()
         path: Path = Path(path)
         for name in names:
