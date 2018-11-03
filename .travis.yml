@@ -61,8 +61,8 @@ script:
       (
           cd "$TR_PACKAGE_DIR" && 
           python3.7 "$TR_PROJECT_ROOT/build.py" \
-              --smlib "$TR_SM_SCRIPTING_DIR" \ 
-              --item_schema_api "$TR_RELEASE_CACHE_BUILDER" \ 
+              --smlib "$TR_SM_SCRIPTING_DIR" \
+              --item_schema_api "$TR_RELEASE_CACHE_BUILDER" \
               --branch "$TR_RELEASE_REAL_BRANCH" \
       )
 
