@@ -117,6 +117,16 @@ def build(item_schema_api: str,
                                       version_str)
     with open(str(package_root / project_updater.manifest_name), "w") as updater_manifest:
         vdf.dump(manifest_data, updater_manifest, pretty=True)
+
+    if project_updater.enabled:
+        with open(str(package_dir / "gh_deploy_args.txt"), "w") as argfile:
+            arguments: str = ""
+            for argument in (project_updater.project_path, version_str,
+                             project_updater.repo, project_updater.user, project_updater.branch):
+                if "\n" in argument:
+                    raise ValueError(f"Argument cannot contain newline characters: {repr(argument)}")
+                arguments += f"{argument}\n"
+            argfile.write(arguments)
     pass
 
 
@@ -226,9 +236,14 @@ class TauntsPluginProject(SMProject):
 class ProjectUpdater(GitHubUpdaterData):
     def __init__(self, local_branch: Optional[str], schema_api: str):
         branch: Optional[str] = ProjectUpdater.format_updater_branch(local_branch)
+        if branch is None:
+            branch: str = "__updater_disabled__"
+            self.enabled: bool = False
+        else:
+            self.enabled: bool = True
         super().__init__(user="fakuivan",
                          repo="sm_updater_plugins",
-                         branch=branch if branch is not None else "__updater_disabled__",
+                         branch=branch,
                          project_path=f"{TauntsPluginProject.project_name}-{schema_api}")
 
     @staticmethod
