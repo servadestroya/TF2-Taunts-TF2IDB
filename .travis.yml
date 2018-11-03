@@ -62,12 +62,12 @@ script:
           cd "$TR_PACKAGE_DIR" && 
           python3.7 "$TR_PACKAGE_DIR/build.py" \
               --smlib "$TR_SM_SCRIPTING_DIR" \ 
-              --item_schema_api "$CACHE_BUILDER" \ 
+              --item_schema_api "$TR_RELEASE_CACHE_BUILDER" \ 
               --branch "$TR_RELEASE_REAL_BRANCH" \
       )
 
 before_deploy:
-    - TR_PACKAGE_BUILD_DIR="$TR_PACKAGE_DIR/build-$CACHE_BUILDER"
+    - TR_PACKAGE_BUILD_DIR="$TR_PACKAGE_DIR/build-$TR_RELEASE_CACHE_BUILDER"
     - TR_PACKAGE_ROOT_DIR="$TR_PACKAGE_BUILD_DIR/root"
     - TR_GH_DEPLOY_ARGS_FILE="$TR_PACKAGE_BUILD_DIR/gh_deploy_args.txt"
     - |
