@@ -76,7 +76,7 @@ before_deploy:
           ln -s "$TR_PACKAGE_ROOT_DIR" "$TR_PACKAGE_BUILD_DIR/.package_updater"
           TR_GH_DEPLOY_SCRIPT="$TR_PROJECT_ROOT/buildtools/scripts/tony_updater/deploy.sh"
           chmod +x "$TR_GH_DEPLOY_SCRIPT"
-          mapfile -t TR_GH_DEPLOY_ARGS <
+          mapfile -t TR_GH_DEPLOY_ARGS <"$TR_GH_DEPLOY_ARGS_FILE"
           TR_RELEASE_NAME="${TR_GH_DEPLOY_ARGS[0]}"
           TR_RELEASE_VERSION="${TR_GH_DEPLOY_ARGS[1]}"
           TR_UPDATER_REPO="${TR_GH_DEPLOY_ARGS[2]}"
