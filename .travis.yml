@@ -53,6 +53,7 @@ install:
           TR_RELEASE_REAL_BRANCH="master"
       else
           TR_RELEASE_REAL_BRANCH="$TRAVIS_BRANCH"
+      fi
     
 # And build!
 script: 
@@ -83,6 +84,7 @@ before_deploy:
           TR_UPDATER_BRANCH="${TR_GH_DEPLOY_ARGS[4]}"
       else
           TR_GH_DEPLOY=1
+      fi
 
 deploy:
     - provider: releases
