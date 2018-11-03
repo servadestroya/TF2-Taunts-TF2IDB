@@ -95,9 +95,9 @@ def build(item_schema_api: str,
                              str(project_on_package.file_main_source.absolute()),
                              f"-i={smlib.absolute()}",
                              f"-i={project_on_package.dir_include.absolute()}",
-                             f"-i={project_on_package.dir_temp_includes.absolute()}",
-                             f"-D={project_on_package.dir_plugins.absolute()}"] +
-                            ([f"{define}="] if define is not None else []))
+                             f"-i={project_on_package.dir_temp_includes.absolute()}"] +
+                            ([f"{define}="] if define is not None else []),
+                            cwd=str(project_on_package.dir_plugins.absolute()))
     result.check_returncode()
 
     # Packing files
